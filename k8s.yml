@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elixir-cluster-demo
+spec:
+  selector:
+    app: elixir-cluster-demo
+  clusterIP: None # "headless" service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elixir-cluster-demo
+  labels:
+    app: elixir-cluster-demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: elixir-cluster-demo
+  template:
+    metadata:
+      labels:
+        app: elixir-cluster-demo
+    spec:
+      containers:
+      - name: elixir-cluster-demo
+        image: elixir-cluster-demo:latest
+        imagePullPolicy: Never # to pick up Docker for Mac images built
